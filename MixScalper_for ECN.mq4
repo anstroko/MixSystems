@@ -82,7 +82,8 @@ int start()
 {
 
 if (MM==true){
- Kof=AccountBalance()/DinamicDepo;}
+ if (Kof<AccountBalance()/DinamicDepo){Kof=AccountBalance()/DinamicDepo;}
+ }
  else {Kof=1;}
 
 if ((BM5==true)||(BM15==true)||(BM30==true)||(BM60==true)||(SM5==true)||(SM15==true)||(SM30==true)||(SM60==true)){
