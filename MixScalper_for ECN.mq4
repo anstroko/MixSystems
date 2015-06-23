@@ -5,6 +5,8 @@ extern bool TM5=true;
 extern bool TM15=true;
 extern bool TM30=true;
 extern bool TM60=true;
+extern bool MM=true;
+extern int DinamicDepo=10000;
 extern int TP_5=10;
 extern int SL_5=40;
 extern int filtr_5=2;
@@ -63,6 +65,7 @@ bool BM5=false;
 bool BM15=false;
 bool BM30=false;
 bool BM60=false;
+int Kof;
 int init()
 {
    if((Digits==3)||(Digits==5)) { k=10;}
@@ -77,6 +80,10 @@ int deinit()
 
 int start()
 {
+
+if (MM==true){
+ Kof=AccountBalance()/DinamicDepo;}
+ else {Kof=1;}
 
 if ((BM5==true)||(BM15==true)||(BM30==true)||(BM60==true)||(SM5==true)||(SM15==true)||(SM30==true)||(SM60==true)){
    for(int inb=0;inb<OrdersTotal();inb++)
@@ -146,7 +153,7 @@ int total=OrdersTotal();
   Start5=CloseAt_5;
     Print("Открываемся на buy m5");
     RefreshRates();
-  if(    OrderSend(Symbol(),OP_BUY,lot,Ask,Slipage*k,NULL,NULL,"M5",Magic_Number,0,Blue) < 0) 
+  if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M5",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }
@@ -158,7 +165,7 @@ int total=OrdersTotal();
   Start15=CloseAt_15;
   Print("Открываемся на buy m15");
   RefreshRates();
-  if(    OrderSend(Symbol(),OP_BUY,lot,Ask,Slipage*k,NULL,NULL,"M15",Magic_Number,0,Blue) < 0) 
+  if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M15",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }   else {BM15=true;SendMail("MixSystems Buy"+Symbol(),"Депо ="+AccountEquity());}
@@ -168,7 +175,7 @@ int total=OrdersTotal();
   Start30=CloseAt_30;
     Print("Открываемся на buy m30");
     RefreshRates();
-  if(    OrderSend(Symbol(),OP_BUY,lot,Ask,Slipage*k,NULL,NULL,"M30",Magic_Number,0,Blue) < 0) 
+  if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M30",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }   else {BM30=true;SendMail("MixSystems Buy"+Symbol(),"Депо ="+AccountEquity());}
@@ -178,7 +185,7 @@ int total=OrdersTotal();
   Start60=CloseAt_60;
     Print("Открываемся на buy m60");
     RefreshRates();
-  if(    OrderSend(Symbol(),OP_BUY,lot,Ask,Slipage*k,NULL,NULL,"M60",Magic_Number,0,Blue) < 0) 
+  if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M60",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }   else {BM60=true;SendMail("MixSystems Buy"+Symbol(),"Депо ="+AccountEquity());}
@@ -189,7 +196,7 @@ int total=OrdersTotal();
    Start5=CloseAt_5;
      Print("Открываемся на sell m5");
      RefreshRates();
-  if(    OrderSend(Symbol(),OP_SELL,lot,Bid,Slipage*k,NULL,NULL,"M5",Magic_Number,0,Red) < 0) 
+  if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M5",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }   else {SM5=true;SendMail("MixSystems Sell"+Symbol(),"Депо ="+AccountEquity());}
@@ -199,7 +206,7 @@ int total=OrdersTotal();
    Start15=CloseAt_15;
         Print("Открываемся на sell m15");
         RefreshRates();
-  if(    OrderSend(Symbol(),OP_SELL,lot,Bid,Slipage*k,NULL,NULL,"M15",Magic_Number,0,Red) < 0) 
+  if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M15",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }else {SM15=true;SendMail("MixSystems Sell"+Symbol(),"Депо ="+AccountEquity());}
@@ -209,7 +216,7 @@ int total=OrdersTotal();
    Start30=CloseAt_30;
         Print("Открываемся на sell m30");
         RefreshRates();
-  if(    OrderSend(Symbol(),OP_SELL,lot,Bid,Slipage*k,NULL,NULL,"M30",Magic_Number,0,Red) < 0) 
+  if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M30",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }else {SM30=true;SendMail("MixSystems Sell"+Symbol(),"Депо ="+AccountEquity());}
@@ -219,7 +226,7 @@ int total=OrdersTotal();
    Start60=CloseAt_60;
            Print("Открываемся на sell m60");
            RefreshRates();
-  if(    OrderSend(Symbol(),OP_SELL,lot,Bid,Slipage*k,NULL,NULL,"M60",Magic_Number,0,Red) < 0) 
+  if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M60",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }else {SM60=true;SendMail("MixSystems Sell"+Symbol(),"Депо ="+AccountEquity());}
