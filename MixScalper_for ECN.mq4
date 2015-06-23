@@ -93,18 +93,18 @@ if ((BM5==true)||(BM15==true)||(BM30==true)||(BM60==true)||(SM5==true)||(SM15==t
          if((OrderSymbol()==Symbol())&&(OrderMagicNumber()==Magic_Number) )
            {
          
-            if(OrderType()==OP_BUY){ if (BM5==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_5*k*Point,OrderOpenPrice()+TP_5*k*Point,0,Orange)>0){BM5=false;}     }
-                                     if (BM15==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_15*k*Point,OrderOpenPrice()+TP_15*k*Point,0,Orange)>0){BM15=false;}     }
-                                     if (BM30==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_30*k*Point,OrderOpenPrice()+TP_30*k*Point,0,Orange)>0){BM30=false;}     }
-                                     if (BM60==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_60*k*Point,OrderOpenPrice()+TP_60*k*Point,0,Orange)>0){BM60=false;} }
+            if(OrderType()==OP_BUY){ if ((BM5==true)&&(OrderComment()=="M5")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_5*k*Point,OrderOpenPrice()+TP_5*k*Point,0,Orange)>0){BM5=false;}     }
+                                     if ((BM15==true)&&(OrderComment()=="M15")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_15*k*Point,OrderOpenPrice()+TP_15*k*Point,0,Orange)>0){BM15=false;}     }
+                                     if ((BM30==true)&&(OrderComment()=="M30")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_30*k*Point,OrderOpenPrice()+TP_30*k*Point,0,Orange)>0){BM30=false;}     }
+                                     if ((BM60==true)&&(OrderComment()=="M60")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()-SL_60*k*Point,OrderOpenPrice()+TP_60*k*Point,0,Orange)>0){BM60=false;} }
 
                                    }
             
              if(OrderType()==OP_SELL){
-                                     if (SM5==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_5*k*Point,OrderOpenPrice()-TP_5*k*Point,0,Orange)>0){SM5=false;}     }
-                                     if (SM15==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_15*k*Point,OrderOpenPrice()-TP_15*k*Point,0,Orange)>0){SM15=false;}     }
-                                     if (SM30==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_30*k*Point,OrderOpenPrice()-TP_30*k*Point,0,Orange)>0){SM30=false;}     }
-                                     if (SM60==true){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_60*k*Point,OrderOpenPrice()-TP_60*k*Point,0,Orange)>0){SM60=false;} }
+                                     if ((SM5==true)&&(OrderComment()=="M5")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_5*k*Point,OrderOpenPrice()-TP_5*k*Point,0,Orange)>0){SM5=false;}     }
+                                     if ((SM15==true)&&(OrderComment()=="M15")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_15*k*Point,OrderOpenPrice()-TP_15*k*Point,0,Orange)>0){SM15=false;}     }
+                                     if ((SM30==true)&&(OrderComment()=="M30")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_30*k*Point,OrderOpenPrice()-TP_30*k*Point,0,Orange)>0){SM30=false;}     }
+                                     if ((SM60==true)&&(OrderComment()=="M60")){ if (OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice()+SL_60*k*Point,OrderOpenPrice()-TP_60*k*Point,0,Orange)>0){SM60=false;} }
 
                                      }
  
