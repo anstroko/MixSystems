@@ -6,6 +6,9 @@ extern bool TM15=true;
 extern bool TM30=true;
 extern bool TM60=true;
 extern bool MM=true;
+extern int LowLevel=-95;
+extern int CCIUP=90;
+extern int WPRUP=-5;
 extern int DinamicDepo=10000;
 extern int TP_5=10;
 extern int SL_5=40;
@@ -178,7 +181,7 @@ if (Start5!=0){Start5=Start5-1;}
       if ((Start15!=0)&&(OpenOrder_5==false)){Start5=0;}    
         if ((Start30!=0)&&(OpenOrder_30==false)){Start30=0;}  
           if ((Start60!=0)&&(OpenOrder_60==false)){Start60=0;}      
-  if ((OpenOrder_5==false)&&(TM5==true)&&((MA5+filtr_5*Point*k)<Close[1])&&(ATR5>0.0002)&&(WPR5<-95)&&(CCI5<-95)) { 
+  if ((OpenOrder_5==false)&&(TM5==true)&&((MA5+filtr_5*Point*k)<Close[1])&&(ATR5>0.0002)&&(WPR5<LowLevel)&&(CCI5<LowLevel)) { 
   Start5=CloseAt_5;
     Print("Открываемся на buy m5");
     RefreshRates();
@@ -190,7 +193,7 @@ if (Start5!=0){Start5=Start5-1;}
   }
   
   if (((Min==15)||(Min==30)||(Min==45)||(Min==00))&&(TM15==true)){
-    if ((OpenOrder_15==false)&&((MA15+filtr_15*Point*k)<Close[1])&&(ATR15>0.0002)&&(WPR15<-95)&&(CCI15<-95)) { 
+    if ((OpenOrder_15==false)&&((MA15+filtr_15*Point*k)<Close[1])&&(ATR15>0.0002)&&(WPR15<LowLevel)&&(CCI15<LowLevel)) { 
   Start15=CloseAt_15;
   Print("Открываемся на buy m15");
   RefreshRates();
@@ -200,7 +203,7 @@ if (Start5!=0){Start5=Start5-1;}
       }   else {BM15=true;SendMail("MixSystems Buy"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   }}
    if (((Min==30)||(Min==00))&&(TM30==true)) {
-    if ((OpenOrder_30==false)&&((MA30+filtr_30*Point*k)<Close[1])&&(ATR30>0.0002)&&(WPR30<-95)&&(CCI30<-95)) { 
+    if ((OpenOrder_30==false)&&((MA30+filtr_30*Point*k)<Close[1])&&(ATR30>0.0002)&&(WPR30<LowLevel)&&(CCI30<LowLevel)) { 
   Start30=CloseAt_30;
     Print("Открываемся на buy m30");
     RefreshRates();
@@ -210,7 +213,7 @@ if (Start5!=0){Start5=Start5-1;}
       }   else {BM30=true;SendMail("MixSystems Buy"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   }}
    if (((Min==00))&&(TM60==true)) {
-    if ((OpenOrder_60==false)&&((MA60+filtr_60*Point*k)<Close[1])&&(ATR60>0.0002)&&(WPR60<-95)&&(CCI60<-95)) { 
+    if ((OpenOrder_60==false)&&((MA60+filtr_60*Point*k)<Close[1])&&(ATR60>0.0002)&&(WPR60<LowLevel)&&(CCI60<LowLevel)) { 
   Start60=CloseAt_60;
     Print("Открываемся на buy m60");
     RefreshRates();
@@ -221,7 +224,7 @@ if (Start5!=0){Start5=Start5-1;}
   }}
   
   
-   if ((OpenOrder_5==false)&&(TM5==true)&&((MA5-filtr_5*Point*k)>Close[1])&&(ATR5>0.0002)&&(WPR5>-5)&&(CCI5>90)) { 
+   if ((OpenOrder_5==false)&&(TM5==true)&&((MA5-filtr_5*Point*k)>Close[1])&&(ATR5>0.0002)&&(WPR5>WPRUP)&&(CCI5>CCIUP)) { 
    Start5=CloseAt_5;
      Print("Открываемся на sell m5");
      RefreshRates();
@@ -231,7 +234,7 @@ if (Start5!=0){Start5=Start5-1;}
       }   else {SM5=true;SendMail("MixSystems Sell"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   } 
   if (((Min==15)||(Min==30)||(Min==45)||(Min==00))&&(TM15==true)){
-  if ((OpenOrder_15==false)&&((MA15-filtr_15*Point*k)>Close[1])&&(ATR15>0.0002)&&(WPR15>-5)&&(CCI15>90)) { 
+  if ((OpenOrder_15==false)&&((MA15-filtr_15*Point*k)>Close[1])&&(ATR15>0.0002)&&(WPR15>WPRUP)&&(CCI15>CCIUP)) { 
    Start15=CloseAt_15;
         Print("Открываемся на sell m15");
         RefreshRates();
@@ -241,7 +244,7 @@ if (Start5!=0){Start5=Start5-1;}
       }else {SM15=true;SendMail("MixSystems Sell"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   } }
    if (((Min==30)||(Min==00))&&(TM30==true)) {
-    if ((OpenOrder_30==false)&&((MA30-filtr_30*Point*k)>Close[1])&&(ATR30>0.0002)&&(WPR15>-5)&&(CCI30>90)) { 
+    if ((OpenOrder_30==false)&&((MA30-filtr_30*Point*k)>Close[1])&&(ATR30>0.0002)&&(WPR15>WPRUP)&&(CCI30>CCIUP)) { 
    Start30=CloseAt_30;
         Print("Открываемся на sell m30");
         RefreshRates();
@@ -251,7 +254,7 @@ if (Start5!=0){Start5=Start5-1;}
       }else {SM30=true;SendMail("MixSystems Sell"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   } }
    if (((Min==00))&&(TM60==true)) {
-    if ((OpenOrder_60==false)&&((MA60-filtr_60*Point*k)>Close[1])&&(ATR60>0.0002)&&(WPR60>-5)&&(CCI60>90)) { 
+    if ((OpenOrder_60==false)&&((MA60-filtr_60*Point*k)>Close[1])&&(ATR60>0.0002)&&(WPR60>WPRUP)&&(CCI60>CCIUP)) { 
    Start60=CloseAt_60;
            Print("Открываемся на sell m60");
            RefreshRates();
