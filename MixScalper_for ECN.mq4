@@ -43,8 +43,8 @@ extern int Magic_Number = 68705;
 extern int Slipage=3;
 extern int SleepTime=2;
 
-
-
+int total;
+int Min;
 int Start5;
 int Start15;
 int Start30;
@@ -83,6 +83,11 @@ int deinit()
 
 int start()
 {
+  ObjectCreate("label_object1",OBJ_LABEL,0,0,0);
+ObjectSet("label_object1",OBJPROP_CORNER,4);
+ObjectSet("label_object1",OBJPROP_XDISTANCE,10);
+ObjectSet("label_object1",OBJPROP_YDISTANCE,10);
+ObjectSetText("label_object1","Минуты "+Min,12,"Arial",Green);
 
 if (MM==true){
  if (Kof<AccountBalance()/DinamicDepo){Kof=AccountBalance()/DinamicDepo;}
@@ -121,8 +126,8 @@ if ((BM5==true)||(BM15==true)||(BM30==true)||(BM60==true)||(SM5==true)||(SM15==t
   if(!isNewBar())return(0);
 if (Start5!=0){Start5=Start5-1;}
    OpenOrder_5=false;
-   int total=OrdersTotal();
-   int Min=Minute();
+    total=OrdersTotal();
+   Min=Minute();
 //TimeFrame 5
   double MA5=iMA(NULL,0,MA_5,0,MODE_SMA,PRICE_CLOSE,1);
   double ATR5=iATR(NULL,0,22,1);
@@ -149,119 +154,119 @@ if (Start5!=0){Start5=Start5-1;}
   double WPR60=iWPR(NULL,60,WPR_60,1);
   double CCI60=iCCI(NULL,60,CCI_60,PRICE_TYPICAL,1);    
    
-  if ((Min==15)||(Min==30)||(Min==45)||(Min==00)){  OpenOrder_15=false;}
- if ((Min==30)||(Min==00)) {   OpenOrder_30=false;}
- if ((Min==00))  {  OpenOrder_60=false;}
+  if ((Min==15)||(Min==30)||(Min==45)||(Min==0)){  OpenOrder_15=false;}
+ if ((Min==30)||(Min==0)) {   OpenOrder_30=false;}
+ if ((Min==0))  {  OpenOrder_60=false;}
         for(int in=0;in<total;in++)
      {      if(OrderSelect(in,SELECT_BY_POS)==true)
         {
          if((OrderSymbol()==Symbol())&&(OrderMagicNumber()==Magic_Number) )
            {
-           if ((OrderType()==OP_BUY)&&(OrderComment()=="M5")){OpenOrder_5=true; if ((OrderProfit()>0)&&(Start5==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
+           if ((OrderType()==OP_BUY)&&(OrderComment()=="M5")){OpenOrder_5=true; Print("Количество свечей до перевода в безубыток M5 ",Start5);if ((OrderProfit()>0)&&(Start5==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
            }
-            if ((OrderType()==OP_BUY)&&(OrderComment()=="M15")&&((Min==15)||(Min==30)||(Min==45)||(Min==00))){OpenOrder_15=true; if (Start15!=0){Start15=Start15-1;} if ((OrderProfit()>0)&&(Start15==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
+            if ((OrderType()==OP_BUY)&&(OrderComment()=="M15")&&((Min==15)||(Min==30)||(Min==45)||(Min==0))){OpenOrder_15=true; if (Start15!=0){Start15=Start15-1;Print("Количество свечей до перевода в безубыток M15 ",Start15);} if ((OrderProfit()>0)&&(Start15==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
            }
-             if ((OrderType()==OP_BUY)&&(OrderComment()=="M30")&&((Min==30)||(Min==00))){OpenOrder_30=true; if (Start30!=0){Start30=Start30-1;} if ((OrderProfit()>0)&&(Start30==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
+             if ((OrderType()==OP_BUY)&&(OrderComment()=="M30")&&((Min==30)||(Min==0))){OpenOrder_30=true; if (Start30!=0){Start30=Start30-1;Print("Количество свечей до перевода в безубыток M30 ",Start30);} if ((OrderProfit()>0)&&(Start30==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
            }
-             if ((OrderType()==OP_BUY)&&(OrderComment()=="M60")&&(Min==00)){OpenOrder_60=true; if (Start60!=0){Start60=Start60-1;} if ((OrderProfit()>0)&&(Start60==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
+             if ((OrderType()==OP_BUY)&&(OrderComment()=="M60")&&(Min==0)){OpenOrder_60=true; if (Start60!=0){Start60=Start60-1;Print("Количество свечей до перевода в безубыток M60 ",Start60);} if ((OrderProfit()>0)&&(Start60==0)){OrderClose(OrderTicket(),OrderLots(),Bid,3*k,Black);}
            }
-           if ((OrderType()==OP_SELL)&&(OrderComment()=="M5")){OpenOrder_5=true; if ((OrderProfit()>0)&&(Start5==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
+           if ((OrderType()==OP_SELL)&&(OrderComment()=="M5")){OpenOrder_5=true;Print("Количество свечей до перевода в безубыток M5 ",Start5); if ((OrderProfit()>0)&&(Start5==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
            }
-           if ((OrderType()==OP_SELL)&&(OrderComment()=="M15")&&((Min==15)||(Min==30)||(Min==45)||(Min==00))){OpenOrder_15=true; if (Start15!=0){Start15=Start15-1;}if ((OrderProfit()>0)&&(Start15==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
+           if ((OrderType()==OP_SELL)&&(OrderComment()=="M15")&&((Min==15)||(Min==30)||(Min==45)||(Min==0))){OpenOrder_15=true; if (Start15!=0){Start15=Start15-1;Print("Количество свечей до перевода в безубыток M15 ",Start15);}if ((OrderProfit()>0)&&(Start15==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
            }
-            if ((OrderType()==OP_SELL)&&(OrderComment()=="M30")&&((Min==30)||(Min==00))){OpenOrder_30=true; if (Start30!=0){Start30=Start30-1;}if ((OrderProfit()>0)&&(Start30==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
+            if ((OrderType()==OP_SELL)&&(OrderComment()=="M30")&&((Min==30)||(Min==0))){OpenOrder_30=true; if (Start30!=0){Start30=Start30-1;Print("Количество свечей до перевода в безубыток M30 ",Start30);}if ((OrderProfit()>0)&&(Start30==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
            }
-           if ((OrderType()==OP_SELL)&&(OrderComment()=="M60")&&(Min==00)){OpenOrder_60=true; if (Start60!=0){Start60=Start60-1;}if ((OrderProfit()>0)&&(Start60==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
+           if ((OrderType()==OP_SELL)&&(OrderComment()=="M60")&&(Min==0)){OpenOrder_60=true; if (Start60!=0){Start60=Start60-1;Print("Количество свечей до перевода в безубыток M60 ",Start60);}if ((OrderProfit()>0)&&(Start60==0)){OrderClose(OrderTicket(),OrderLots(),Ask,3*k,Black);}
            }
             }
-    }
+      }
      }  
 
    if ((Start5!=0)&&(OpenOrder_5==false)){Start5=0;}  
-      if ((Start15!=0)&&(OpenOrder_5==false)){Start5=0;}    
-        if ((Start30!=0)&&(OpenOrder_30==false)){Start30=0;}  
-          if ((Start60!=0)&&(OpenOrder_60==false)){Start60=0;}      
+      if ((Start15!=0)&&(OpenOrder_15==false)&&((Min==0)||(Min==15)||(Min==30)||(Min==45))){Start15=0;}    
+        if ((Start30!=0)&&(OpenOrder_30==false)&&((Min==0)||(Min==30))){Start30=0;}  
+          if ((Start60!=0)&&(OpenOrder_60==false)&&(Min==0)){Start60=0;}      
   if ((OpenOrder_5==false)&&(TM5==true)&&((MA5+filtr_5*Point*k)<Close[1])&&(ATR5>0.0002)&&(WPR5<LowLevel)&&(CCI5<LowLevel)) { 
   Start5=CloseAt_5;
-    Print("Открываемся на buy m5");
+    Print("Открываемся на buy m5, закрытие через ",Start5);
     RefreshRates();
   if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M5",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
       }
-      else {BM5=true;SendMail("MixSystems Buy"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      else {BM5=true;SendMail("MixSystems Buy "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   }
   
-  if (((Min==15)||(Min==30)||(Min==45)||(Min==00))&&(TM15==true)){
+  if (((Min==15)||(Min==30)||(Min==45)||(Min==0))&&(TM15==true)){
     if ((OpenOrder_15==false)&&((MA15+filtr_15*Point*k)<Close[1])&&(ATR15>0.0002)&&(WPR15<LowLevel)&&(CCI15<LowLevel)) { 
   Start15=CloseAt_15;
-  Print("Открываемся на buy m15");
+  Print("Открываемся на buy m15, закрытие через ",Start15);
   RefreshRates();
   if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M15",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
-      }   else {BM15=true;SendMail("MixSystems Buy"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      }   else {BM15=true;SendMail("MixSystems Buy "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   }}
-   if (((Min==30)||(Min==00))&&(TM30==true)) {
+   if (((Min==30)||(Min==0))&&(TM30==true)) {
     if ((OpenOrder_30==false)&&((MA30+filtr_30*Point*k)<Close[1])&&(ATR30>0.0002)&&(WPR30<LowLevel)&&(CCI30<LowLevel)) { 
   Start30=CloseAt_30;
-    Print("Открываемся на buy m30");
+    Print("Открываемся на buy m30, закрытие через ",Start30);
     RefreshRates();
   if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M30",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
-      }   else {BM30=true;SendMail("MixSystems Buy"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      }   else {BM30=true;SendMail("MixSystems Buy "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   }}
-   if (((Min==00))&&(TM60==true)) {
+   if (((Min==0))&&(TM60==true)) {
     if ((OpenOrder_60==false)&&((MA60+filtr_60*Point*k)<Close[1])&&(ATR60>0.0002)&&(WPR60<LowLevel)&&(CCI60<LowLevel)) { 
   Start60=CloseAt_60;
-    Print("Открываемся на buy m60");
+    Print("Открываемся на buy m60, закрытие через ",Start60);
     RefreshRates();
   if(    OrderSend(Symbol(),OP_BUY,lot*Kof,Ask,Slipage*k,NULL,NULL,"M60",Magic_Number,0,Blue) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
-      }   else {BM60=true;SendMail("MixSystems Buy"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      }   else {BM60=true;SendMail("MixSystems Buy "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   }}
   
   
    if ((OpenOrder_5==false)&&(TM5==true)&&((MA5-filtr_5*Point*k)>Close[1])&&(ATR5>0.0002)&&(WPR5>WPRUP)&&(CCI5>CCIUP)) { 
    Start5=CloseAt_5;
-     Print("Открываемся на sell m5");
+     Print("Открываемся на sell m5, закрытие через ",Start5);
      RefreshRates();
   if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M5",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
-      }   else {SM5=true;SendMail("MixSystems Sell"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      }   else {SM5=true;SendMail("MixSystems Sell "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   } 
-  if (((Min==15)||(Min==30)||(Min==45)||(Min==00))&&(TM15==true)){
+  if (((Min==15)||(Min==30)||(Min==45)||(Min==0))&&(TM15==true)){
   if ((OpenOrder_15==false)&&((MA15-filtr_15*Point*k)>Close[1])&&(ATR15>0.0002)&&(WPR15>WPRUP)&&(CCI15>CCIUP)) { 
    Start15=CloseAt_15;
-        Print("Открываемся на sell m15");
+        Print("Открываемся на sell m15, закрытие через ",Start15);
         RefreshRates();
   if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M15",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
-      }else {SM15=true;SendMail("MixSystems Sell"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      }else {SM15=true;SendMail("MixSystems Sell "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   } }
-   if (((Min==30)||(Min==00))&&(TM30==true)) {
+   if (((Min==30)||(Min==0))&&(TM30==true)) {
     if ((OpenOrder_30==false)&&((MA30-filtr_30*Point*k)>Close[1])&&(ATR30>0.0002)&&(WPR15>WPRUP)&&(CCI30>CCIUP)) { 
    Start30=CloseAt_30;
-        Print("Открываемся на sell m30");
+        Print("Открываемся на sell m30, закрытие через ",Start30);
         RefreshRates();
   if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M30",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
-      }else {SM30=true;SendMail("MixSystems Sell"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      }else {SM30=true;SendMail("MixSystems Sell "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   } }
-   if (((Min==00))&&(TM60==true)) {
+   if (((Min==0))&&(TM60==true)) {
     if ((OpenOrder_60==false)&&((MA60-filtr_60*Point*k)>Close[1])&&(ATR60>0.0002)&&(WPR60>WPRUP)&&(CCI60>CCIUP)) { 
    Start60=CloseAt_60;
-           Print("Открываемся на sell m60");
+           Print("Открываемся на sell m60, закрытие через ",Start60);
            RefreshRates();
   if(    OrderSend(Symbol(),OP_SELL,lot*Kof,Bid,Slipage*k,NULL,NULL,"M60",Magic_Number,0,Red) < 0) 
       { 
         Alert("Ошибка открытия позиции № ", GetLastError());
-      }else {SM60=true;SendMail("MixSystems Sell"+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
+      }else {SM60=true;SendMail("MixSystems Sell "+Symbol(),MarketInfo(Symbol(),MODE_SPREAD));}
   }   }
   
  
