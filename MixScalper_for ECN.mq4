@@ -183,9 +183,15 @@ if (Start5!=0){Start5=Start5-1;}
      }  
 
    if ((Start5!=0)&&(OpenOrder_5==false)){Start5=0;}  
+<<<<<<< Updated upstream
       if ((Start15!=0)&&(OpenOrder_15==false)&&((Min==0)||(Min==15)||(Min==30)||(Min==45))){Start15=0;}    
         if ((Start30!=0)&&(OpenOrder_30==false)&&((Min==0)||(Min==30))){Start30=0;}  
           if ((Start60!=0)&&(OpenOrder_60==false)&&(Min==0)){Start60=0;}      
+=======
+      if ((Start15!=0)&&(OpenOrder_15==false)){Start15=0;}    
+        if ((Start30!=0)&&(OpenOrder_30==false)){Start30=0;}  
+          if ((Start60!=0)&&(OpenOrder_60==false)){Start60=0;}      
+>>>>>>> Stashed changes
   if ((OpenOrder_5==false)&&(TM5==true)&&((MA5+filtr_5*Point*k)<Close[1])&&(ATR5>0.0002)&&(WPR5<LowLevel)&&(CCI5<LowLevel)) { 
   Start5=CloseAt_5;
     Print("Открываемся на buy m5, закрытие через ",Start5);
